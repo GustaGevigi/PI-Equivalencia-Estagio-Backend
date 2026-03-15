@@ -7,17 +7,17 @@ export class SequelizeStudentRepository implements IStudentRepository {
     await StudentModel.create(student.props);
   }
 
-  async findByEmail(email: string): Promise<Student | null> {
-    const student = await StudentModel.findOne({ where: { email } });
-    return student ? new Student(student.toJSON()) : null;
-  }
-
   async findByCpf(cpf: string): Promise<Student | null> {
     const student = await StudentModel.findOne({ where: { cpf } });
     return student ? new Student(student.toJSON()) : null;
   }
 
-  async findById(id: string): Promise<Student | null> {
+  async findByEmail(email: string): Promise<Student | null> {
+    const student = await StudentModel.findOne({ where: { email } });
+    return student ? new Student(student.toJSON()) : null;
+  }
+
+  async findById(id: number): Promise<Student | null> {
     const student = await StudentModel.findOne({ where: { id } });
     return student ? new Student(student.toJSON()) : null;
   }

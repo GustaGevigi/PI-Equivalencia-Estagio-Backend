@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { Student, StudentProps } from '../domain/entities/Student';
 import { IStudentRepository } from '../domain/repositories/IStudentRepository';
 
@@ -9,23 +8,21 @@ type StudentDTO = Omit<StudentProps, 'id'>;
 export class CreateStudentService {
   constructor(private studentRepository: IStudentRepository) {}
 
-  async execute(data: StudentDTO) {
-    if (await this.studentRepository.findByEmail(data.email)) {
+  async execute(student: StudentDTO) {
+    if (await this.studentRepository.findByEmail(student.email)) {
       throw new Error('Email já cadastrado.');
     }
 
-    if (await this.studentRepository.findByCpf(data.cpf)) {
+    if (await this.studentRepository.findByCpf(student.cpf)) {
       throw new Error('CPF já cadastrado.');
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hash(student.password, 10);
 
-    const student = new Student({ ...data, password: hashedPassword });
+    const newStudent = new Student({ ...student, password: hashedPassword });
 
-    await this.studentRepository.create(student);
+    await this.studentRepository.create(newStudent);
 
-    return student;
+    return newStudent;
   }
 }
-
-export default CreateStudentService;
