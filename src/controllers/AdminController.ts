@@ -88,6 +88,11 @@ export class AdminController {
           message: 'Administrator not found!',
         });
       }
+
+      return res.status(201).json({
+        status: 'Success',
+        data: foundAdmin,
+      });
     } catch (error: any) {
       return res.status(400).json({
         message: error.message,
