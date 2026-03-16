@@ -23,7 +23,7 @@ AdminModel.init(
     email: { type: DataTypes.STRING(100), allowNull: false, unique: true },
     password: { type: DataTypes.STRING(100), allowNull: false },
   },
-  { sequelize, tableName: 'Advisors', timestamps: true },
+  { sequelize, tableName: 'Administrators', timestamps: true },
 );
 
 export default AdminModel;
