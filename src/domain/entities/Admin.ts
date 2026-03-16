@@ -5,3 +5,7 @@ export interface AdminProps {
   email: string;
   password: string;
 }
+
+export class Admin {
+  constructor(public props: AdminProps) {}
+}
