@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { CreateAdminService } from '../services/CreateAdminService';
-import { GetAdminByIdService } from '../services/GetAdminByIdService';
-import { GetAdminByCpfService } from '../services/GetAdminByCpfService';
-import { GetAdminByEmailService } from '../services/GetAdminByEmailService';
+import { CreateAdminService } from '../services/admin/CreateAdminService';
+import { GetAdminByIdService } from '../services/admin/GetAdminByIdService';
+import { GetAdminByCpfService } from '../services/admin/GetAdminByCpfService';
+import { GetAdminByEmailService } from '../services/admin/GetAdminByEmailService';
 
 export class AdminController {
   constructor(

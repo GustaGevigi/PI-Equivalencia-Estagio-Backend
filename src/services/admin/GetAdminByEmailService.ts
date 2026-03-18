@@ -1,5 +1,5 @@
-import { AdminProps } from '../domain/entities/Admin';
-import { IAdminRepository } from '../domain/repositories/IAdminRepository';
+import { AdminProps } from '../../domain/entities/Admin';
+import { IAdminRepository } from '../../domain/repositories/IAdminRepository';
 
 export class GetAdminByEmailService {
   constructor(private adminRepo: IAdminRepository) {}

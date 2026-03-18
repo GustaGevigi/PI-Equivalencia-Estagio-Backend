@@ -1,5 +1,5 @@
-import { Advisor, AdvisorProps } from '../domain/entities/Advisor';
-import { IAdvisorRepository } from '../domain/repositories/IAdvisorRepository';
+import { Advisor, AdvisorProps } from '../../domain/entities/Advisor';
+import { IAdvisorRepository } from '../../domain/repositories/IAdvisorRepository';
 
 import bcrypt from 'bcrypt';
 

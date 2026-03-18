@@ -1,8 +1,8 @@
 import { SequelizeStudentRepository } from '../../infrastructure/database/sequelize/repositories/SequelizeStudentRepository';
-import { CreateStudentService } from '../../services/CreateStudentService';
-import { GetStudentByIdService } from '../../services/GetStudentByIdService';
-import { GetStudentByCpfService } from '../../services/GetStudentByCpfService';
-import { GetStudentByEmailService } from '../../services/GetStudentByEmailService';
+import { CreateStudentService } from '../../services/student/CreateStudentService';
+import { GetStudentByIdService } from '../../services/student/GetStudentByIdService';
+import { GetStudentByCpfService } from '../../services/student/GetStudentByCpfService';
+import { GetStudentByEmailService } from '../../services/student/GetStudentByEmailService';
 import { StudentController } from '../../controllers/StudentController';
 
 export const makeStudentController = () => {
