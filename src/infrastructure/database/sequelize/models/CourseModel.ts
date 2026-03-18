@@ -20,7 +20,7 @@ CourseModel.init(
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: DataTypes.STRING(100), allowNull: false },
     semesterAmount: { type: DataTypes.INTEGER, allowNull: false },
-    shift: { type: DataTypes.STRING(20), allowNull: false },
+    shift: { type: DataTypes.STRING(20), allowNull: false, unique: true },
     code: { type: DataTypes.STRING(20), allowNull: false, unique: true },
   },
   { sequelize, tableName: 'Courses', timestamps: true },

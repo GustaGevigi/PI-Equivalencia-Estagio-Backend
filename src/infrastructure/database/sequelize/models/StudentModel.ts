@@ -9,7 +9,7 @@ class StudentModel
   implements StudentProps
 {
   public id!: number;
-  public idCurso!: number;
+  public courseId!: number;
   public cpf!: string;
   public rg!: string;
   public ra!: string;
@@ -22,7 +22,7 @@ class StudentModel
 StudentModel.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    idCurso: { type: DataTypes.INTEGER, allowNull: true },
+    courseId: { type: DataTypes.INTEGER, allowNull: false },
     cpf: { type: DataTypes.STRING(14), allowNull: false, unique: true },
     rg: { type: DataTypes.STRING(20), allowNull: false },
     ra: { type: DataTypes.STRING(20), allowNull: false },

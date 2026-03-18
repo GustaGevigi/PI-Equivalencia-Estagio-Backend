@@ -1,4 +1,5 @@
 import { Student, StudentProps } from '../../domain/entities/Student';
+import { ICourseRepository } from '../../domain/repositories/ICourseRepository';
 import { IStudentRepository } from '../../domain/repositories/IStudentRepository';
 
 import bcrypt from 'bcrypt';
@@ -6,9 +7,22 @@ import bcrypt from 'bcrypt';
 type StudentDTO = Omit<StudentProps, 'id'>;
 
 export class CreateStudentService {
-  constructor(private studentRepository: IStudentRepository) {}
+  constructor(
+    private studentRepository: IStudentRepository,
+    private courseRepo: ICourseRepository,
+  ) {}
 
   async execute(student: StudentDTO) {
+    if (student.courseId) {
+      const courseExists = await this.courseRepo.findById(student.courseId);
+
+      if (!courseExists) {
+        throw new Error(
+          'Curso não encontrado! Não é possível registrar um estudante em um curso não existente.',
+        );
+      }
+    }
+
     if (await this.studentRepository.findByEmail(student.email)) {
       throw new Error('Email já cadastrado.');
     }
