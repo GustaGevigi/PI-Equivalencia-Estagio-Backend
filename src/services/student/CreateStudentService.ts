@@ -1,5 +1,5 @@
-import { Student, StudentProps } from '../domain/entities/Student';
-import { IStudentRepository } from '../domain/repositories/IStudentRepository';
+import { Student, StudentProps } from '../../domain/entities/Student';
+import { IStudentRepository } from '../../domain/repositories/IStudentRepository';
 
 import bcrypt from 'bcrypt';
 

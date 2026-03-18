@@ -1,5 +1,5 @@
-import { StudentProps } from '../domain/entities/Student';
-import { IStudentRepository } from '../domain/repositories/IStudentRepository';
+import { StudentProps } from '../../domain/entities/Student';
+import { IStudentRepository } from '../../domain/repositories/IStudentRepository';
 
 export class GetStudentByIdService {
   constructor(private studentReposiory: IStudentRepository) {}

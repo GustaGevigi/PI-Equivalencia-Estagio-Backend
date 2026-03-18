@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { CreateAdvisorService } from '../services/CreateAdvisorService';
-import { GetAdvisorByIdService } from '../services/GetAdvisorByIdService';
-import { GetAdvisorByCpfService } from '../services/GetAdvisorByCpfService';
-import { GetAdvisorByEmailService } from '../services/GetAdvisorByEmailService';
+import { CreateAdvisorService } from '../services/advisor/CreateAdvisorService';
+import { GetAdvisorByIdService } from '../services/advisor/GetAdvisorByIdService';
+import { GetAdvisorByCpfService } from '../services/advisor/GetAdvisorByCpfService';
+import { GetAdvisorByEmailService } from '../services/advisor/GetAdvisorByEmailService';
 
 export class AdvisorController {
   constructor(

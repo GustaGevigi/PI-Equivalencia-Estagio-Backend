@@ -1,5 +1,5 @@
-import { Admin, AdminProps } from '../domain/entities/Admin';
-import { IAdminRepository } from '../domain/repositories/IAdminRepository';
+import { Admin, AdminProps } from '../../domain/entities/Admin';
+import { IAdminRepository } from '../../domain/repositories/IAdminRepository';
 
 import bcrypt from 'bcrypt';
 
