@@ -1,6 +1,7 @@
 import { IStudentRepository } from '../../../../domain/repositories/IStudentRepository';
 import { Student } from '../../../../domain/entities/Student';
 import StudentModel from '../models/StudentModel';
+import CourseModel from '../models/CourseModel';
 
 export class SequelizeStudentRepository implements IStudentRepository {
   async create(student: Student): Promise<void> {
@@ -18,7 +19,10 @@ export class SequelizeStudentRepository implements IStudentRepository {
   }
 
   async findById(id: number): Promise<Student | null> {
-    const student = await StudentModel.findOne({ where: { id } });
+    const student = await StudentModel.findOne({
+      where: { id },
+      include: [{ model: CourseModel, as: 'course' }],
+    });
     return student ? new Student(student.toJSON()) : null;
   }
 }

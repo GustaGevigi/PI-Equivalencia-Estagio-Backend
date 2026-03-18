@@ -1,6 +1,6 @@
 export interface StudentProps {
   id?: number;
-  idCurso: number;
+  courseId: number;
   cpf: string;
   rg: string;
   ra: string;
