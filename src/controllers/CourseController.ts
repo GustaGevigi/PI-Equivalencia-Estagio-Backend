@@ -2,12 +2,14 @@ import { Request, Response } from 'express';
 import { CreateCourseService } from '../services/course/CreateCourseService';
 import { FindCourseByIdService } from '../services/course/FindByIdService';
 import { FindAllCourseService } from '../services/course/FindAllCourseService';
+import { FindByCodeService } from '../services/course/FindByCodeService';
 
 export class CourseController {
   constructor(
     private createCourseService: CreateCourseService,
     private findCourseByIdService: FindCourseByIdService,
     private findAllCourseService: FindAllCourseService,
+    private findByCodeService: FindByCodeService,
   ) {}
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -68,6 +70,29 @@ export class CourseController {
       return res.status(200).json({
         status: 'Success',
         data: courses,
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async findByCode(req: Request, res: Response): Promise<Response> {
+    try {
+      const { code } = req.query;
+
+      const foundCourse = await this.findByCodeService.execute(String(code));
+
+      if (!foundCourse) {
+        return res.status(404).json({
+          message: 'Course not found!',
+        });
+      }
+
+      return res.status(200).json({
+        status: 'Success',
+        data: foundCourse,
       });
     } catch (error: any) {
       return res.status(400).json({
