@@ -9,4 +9,5 @@ export interface ICourseRepository {
   create(course: Course): Promise<void>;
   findAll(filters?: CourseFilter): Promise<Course[]>;
   findById(id: number): Promise<Course | null>;
+  findByCode(code: string): Promise<Course | null>;
 }

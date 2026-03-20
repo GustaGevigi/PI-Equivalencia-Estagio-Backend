@@ -7,6 +7,10 @@ courseRouter.get('/', (req, res) => {
   return makeCourseController().findAll(req, res);
 });
 
+courseRouter.get('/search/code', (req, res) => {
+  return makeCourseController().findByCode(req, res);
+});
+
 courseRouter.get('/:id', (req, res) => {
   return makeCourseController().findById(req, res);
 });

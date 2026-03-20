@@ -13,6 +13,7 @@ class CourseModel
   public semesterAmount!: number;
   public shift!: Shift;
   public code!: string;
+  public createdByAdminId!: number;
 }
 
 CourseModel.init(
@@ -22,6 +23,13 @@ CourseModel.init(
     semesterAmount: { type: DataTypes.INTEGER, allowNull: false },
     shift: { type: DataTypes.STRING(20), allowNull: false, unique: true },
     code: { type: DataTypes.STRING(20), allowNull: false, unique: true },
+    createdByAdminId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'Administrators', key: 'id' },
+      onUpdate: 'CASCADE',
+      onDelete: 'RESTRICT',
+    },
   },
   { sequelize, tableName: 'Courses', timestamps: true },
 );

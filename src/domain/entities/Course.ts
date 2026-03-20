@@ -6,6 +6,7 @@ export interface CourseProps {
   semesterAmount: number;
   shift: Shift;
   code: string;
+  createdByAdminId: number;
 }
 
 export class Course {

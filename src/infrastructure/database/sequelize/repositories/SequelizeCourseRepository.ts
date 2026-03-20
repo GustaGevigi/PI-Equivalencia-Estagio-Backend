@@ -32,4 +32,14 @@ export class SequelizeCourseRepository implements ICourseRepository {
     const course = await CourseModel.findOne({ where: { id } });
     return course ? new Course(course.toJSON()) : null;
   }
+
+  async findByCode(code: string): Promise<Course | null> {
+    const course = await CourseModel.findOne({ where: { code } });
+
+    if (!course) {
+      return null;
+    }
+
+    return course ? new Course(course.toJSON()) : null;
+  }
 }
