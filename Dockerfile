@@ -18,4 +18,4 @@ EXPOSE 3000
 
 # Comando para iniciar
 # No Dockerfile, altere o CMD para:
-CMD ["./node_modules/.bin/ts-node-dev", "--respawn", "--transpile-only", "src/server.ts"]
+CMD ["npm", "run", "dev"]
