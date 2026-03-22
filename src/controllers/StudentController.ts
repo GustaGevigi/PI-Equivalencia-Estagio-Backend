@@ -1,4 +1,4 @@
-import { query, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { CreateStudentService } from '../services/student/CreateStudentService';
 import { GetStudentByIdService } from '../services/student/GetStudentByIdService';
 import { GetStudentByCpfService } from '../services/student/GetStudentByCpfService';

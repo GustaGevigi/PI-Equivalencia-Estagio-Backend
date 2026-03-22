@@ -1,6 +1,9 @@
 import app from './app';
 import sequelize from './config/database';
+import { setupAssociations } from './infrastructure/database/sequelize/models/associations';
 import { connectMongoDB } from './config/mongodb';
+
+setupAssociations();
 
 const startServer = async () => {
   try {
