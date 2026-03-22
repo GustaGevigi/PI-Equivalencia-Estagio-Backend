@@ -1,5 +1,4 @@
 services:
-  #MySQL Config
   mysql-db:
     image: mysql:8.0
     container_name: mysql_pi_equivalencia
@@ -11,6 +10,23 @@ services:
       - '${DB_PORT}:3306'
     volumes:
       - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: node_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql-db
+    environment:
+      DB_HOST: mysql-db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: 3306
+    volumes:
+      - .:/usr/src/app
+      - /usr/app/node_modules
 
 volumes:
   mysql_data:
