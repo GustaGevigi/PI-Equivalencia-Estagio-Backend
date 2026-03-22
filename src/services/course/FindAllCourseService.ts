@@ -1,4 +1,4 @@
-import { Course, CourseProps } from '../../domain/entities/Course';
+import { Course } from '../../domain/entities/Course';
 import {
   CourseFilter,
   ICourseRepository,
