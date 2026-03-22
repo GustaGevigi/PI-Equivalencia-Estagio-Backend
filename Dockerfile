@@ -17,4 +17,5 @@ COPY . .
 EXPOSE 3000
 
 # Comando para iniciar
-CMD ["npm", "run", "dev"]
+# No Dockerfile, altere o CMD para:
+CMD ["./node_modules/.bin/ts-node-dev", "--respawn", "--transpile-only", "src/server.ts"]
