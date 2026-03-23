@@ -21,35 +21,4 @@ export const setupAssociations = () => {
   // Um Aluno pertence a um Curso
   CourseModel.hasMany(StudentModel, { foreignKey: 'courseId', as: 'students' });
   StudentModel.belongsTo(CourseModel, { foreignKey: 'courseId', as: 'course' });
-
-  // === RELACIONAMENTOS DE EQUIVALÊNCIA ===
-  // Um Aluno pode ter várias solicitações de equivalência
-  StudentModel.hasMany(EquivalencyModel, {
-    foreignKey: 'studentId',
-    as: 'equivalencies',
-  });
-  EquivalencyModel.belongsTo(StudentModel, {
-    foreignKey: 'studentId',
-    as: 'student',
-  });
-
-  // Uma Equivalência é avaliada por um Orientador
-  AdvisorModel.hasMany(EquivalencyModel, {
-    foreignKey: 'advisorId',
-    as: 'evaluatedEquivalencies',
-  });
-  EquivalencyModel.belongsTo(AdvisorModel, {
-    foreignKey: 'advisorId',
-    as: 'advisor',
-  });
-
-  // Uma Equivalência está ligada a um Curso (disciplina de destino)
-  CourseModel.hasMany(EquivalencyModel, {
-    foreignKey: 'courseId',
-    as: 'equivalencies',
-  });
-  EquivalencyModel.belongsTo(CourseModel, {
-    foreignKey: 'courseId',
-    as: 'course',
-  });
 };
