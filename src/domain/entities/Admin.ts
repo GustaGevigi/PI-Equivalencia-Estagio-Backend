@@ -1,11 +1,9 @@
-export interface AdminProps {
-  id?: number;
-  cpf: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import { User, UserProps } from './User';
 
-export class Admin {
-  constructor(public props: AdminProps) {}
+export interface AdminProps extends UserProps {}
+
+export class Admin extends User {
+  constructor(public override props: AdminProps) {
+    super({ ...props, role: 'administrator' });
+  }
 }

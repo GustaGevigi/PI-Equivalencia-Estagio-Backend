@@ -1,19 +1,24 @@
 import { Advisor, AdvisorProps } from '../../domain/entities/Advisor';
 import { IAdvisorRepository } from '../../domain/repositories/IAdvisorRepository';
 
+import { IUserRepository } from '../../domain/repositories/IUserRepository';
+
 import bcrypt from 'bcrypt';
 
 type AdvisorDTO = Omit<AdvisorProps, 'id'>;
 
 export class CreateAdvisorService {
-  constructor(private advisorRepository: IAdvisorRepository) {}
+  constructor(
+    private advisorRepository: IAdvisorRepository,
+    private userRepository: IUserRepository,
+  ) {}
 
   async execute(advisor: AdvisorDTO) {
-    if (await this.advisorRepository.findByEmail(advisor.email)) {
+    if (await this.userRepository.findByEmail(advisor.email)) {
       throw new Error('Email já cadastrado');
     }
 
-    if (await this.advisorRepository.findByEmail(advisor.cpf)) {
+    if (await this.userRepository.findByEmail(advisor.cpf)) {
       throw new Error('CPF já cadastrado');
     }
 

@@ -4,11 +4,16 @@ import { GetAdminByIdService } from '../../services/admin/GetAdminByIdService';
 import { GetAdminByCpfService } from '../../services/admin/GetAdminByCpfService';
 import { GetAdminByEmailService } from '../../services/admin/GetAdminByEmailService';
 import { AdminController } from '../../controllers/AdminController';
+import { SequelizeUserRepository } from '../../infrastructure/database/sequelize/repositories/SequelizeUserRepository';
 
 export const MakeAdminController = () => {
   const adminRepository = new SequelizeAdminRepository();
+  const userRepository = new SequelizeUserRepository();
 
-  const createAdminService = new CreateAdminService(adminRepository);
+  const createAdminService = new CreateAdminService(
+    adminRepository,
+    userRepository,
+  );
   const getAdminByIdService = new GetAdminByIdService(adminRepository);
   const getAdminByCpfService = new GetAdminByCpfService(adminRepository);
   const getAdminByEmailService = new GetAdminByEmailService(adminRepository);

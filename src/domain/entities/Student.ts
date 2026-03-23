@@ -1,15 +1,14 @@
-export interface StudentProps {
-  id?: number;
+import { User, UserProps } from './User';
+
+export interface StudentProps extends UserProps {
   courseId: number;
-  cpf: string;
   rg: string;
   ra: string;
-  name: string;
-  email: string;
-  password: string;
   tel: string;
 }
 
-export class Student {
-  constructor(public props: StudentProps) {}
+export class Student extends User {
+  constructor(public override props: StudentProps) {
+    super({ ...props, role: 'student' });
+  }
 }
