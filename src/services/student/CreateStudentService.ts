@@ -1,6 +1,8 @@
 import { Student, StudentProps } from '../../domain/entities/Student';
-import { ICourseRepository } from '../../domain/repositories/ICourseRepository';
 import { IStudentRepository } from '../../domain/repositories/IStudentRepository';
+
+import { ICourseRepository } from '../../domain/repositories/ICourseRepository';
+import { IUserRepository } from '../../domain/repositories/IUserRepository';
 
 import bcrypt from 'bcrypt';
 
@@ -9,6 +11,7 @@ type StudentDTO = Omit<StudentProps, 'id'>;
 export class CreateStudentService {
   constructor(
     private studentRepository: IStudentRepository,
+    private userRepository: IUserRepository,
     private courseRepo: ICourseRepository,
   ) {}
 
@@ -23,20 +26,24 @@ export class CreateStudentService {
       }
     }
 
-    if (await this.studentRepository.findByEmail(student.email)) {
+    if (await this.userRepository.findByEmail(student.email)) {
       throw new Error('Email já cadastrado.');
     }
 
-    if (await this.studentRepository.findByCpf(student.cpf)) {
+    if (await this.userRepository.findByCpf(student.cpf)) {
       throw new Error('CPF já cadastrado.');
     }
 
     const hashedPassword = await bcrypt.hash(student.password, 10);
 
-    const newStudent = new Student({ ...student, password: hashedPassword });
+    const newStudent = new Student({
+      ...student,
+      password: hashedPassword,
+      role: 'student',
+    });
 
-    await this.studentRepository.create(newStudent);
+    const savedStudent = await this.studentRepository.create(newStudent);
 
-    return newStudent;
+    return savedStudent;
   }
 }

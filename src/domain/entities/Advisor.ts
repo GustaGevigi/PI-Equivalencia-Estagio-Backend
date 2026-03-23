@@ -1,11 +1,9 @@
-export interface AdvisorProps {
-  id?: number;
-  cpf: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import { User, UserProps } from './User';
 
-export class Advisor {
-  constructor(public props: AdvisorProps) {}
+export interface AdvisorProps extends UserProps {}
+
+export class Advisor extends User {
+  constructor(public override props: AdvisorProps) {
+    super({ ...props, role: 'advisor' });
+  }
 }

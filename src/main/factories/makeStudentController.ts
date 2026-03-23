@@ -5,15 +5,18 @@ import { GetStudentByCpfService } from '../../services/student/GetStudentByCpfSe
 import { GetStudentByEmailService } from '../../services/student/GetStudentByEmailService';
 import { StudentController } from '../../controllers/StudentController';
 import { SequelizeCourseRepository } from '../../infrastructure/database/sequelize/repositories/SequelizeCourseRepository';
+import { SequelizeUserRepository } from '../../infrastructure/database/sequelize/repositories/SequelizeUserRepository';
 
 export const makeStudentController = () => {
   //Instancia o repositório do Sequelize
   const studentRepository = new SequelizeStudentRepository();
   const courseRepository = new SequelizeCourseRepository();
+  const userRepository = new SequelizeUserRepository();
 
   //Instancia as Services passando o repositório
   const createStudentService = new CreateStudentService(
     studentRepository,
+    userRepository,
     courseRepository,
   );
   const getStudentByIdService = new GetStudentByIdService(studentRepository);

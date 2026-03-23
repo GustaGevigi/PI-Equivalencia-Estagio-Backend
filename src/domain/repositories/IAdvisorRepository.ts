@@ -1,7 +1,7 @@
 import { Advisor } from '../entities/Advisor';
 
 export interface IAdvisorRepository {
-  create(advisor: Advisor): Promise<void>;
+  create(advisor: Advisor): Promise<Advisor>;
   findByEmail(email: string): Promise<Advisor | null>;
   findByCpf(cpf: string): Promise<Advisor | null>;
   findById(id: number): Promise<Advisor | null>;

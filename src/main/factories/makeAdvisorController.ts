@@ -5,10 +5,16 @@ import { GetAdvisorByCpfService } from '../../services/advisor/GetAdvisorByCpfSe
 import { GetAdvisorByEmailService } from '../../services/advisor/GetAdvisorByEmailService';
 import { AdvisorController } from '../../controllers/AdvisorController';
 
+import { SequelizeUserRepository } from '../../infrastructure/database/sequelize/repositories/SequelizeUserRepository';
+
 export const MakeAdvisorController = () => {
   const advisorRepository = new SequelizeAdvisorRepository();
+  const userRepository = new SequelizeUserRepository();
 
-  const createAdvisorService = new CreateAdvisorService(advisorRepository);
+  const createAdvisorService = new CreateAdvisorService(
+    advisorRepository,
+    userRepository,
+  );
   const getAdvisorByIdService = new GetAdvisorByIdService(advisorRepository);
   const getAdvisorByCpfService = new GetAdvisorByCpfService(advisorRepository);
   const getAdvisorByEmailService = new GetAdvisorByEmailService(

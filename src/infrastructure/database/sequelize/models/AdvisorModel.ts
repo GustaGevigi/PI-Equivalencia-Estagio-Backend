@@ -1,27 +1,27 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../../../config/database';
-import { AdvisorProps } from '../../../../domain/entities/Advisor';
 
-interface AdvisorCreationAttributes extends Optional<AdvisorProps, 'id'> {}
+interface AdvisorCreationAttributes {
+  id: number;
+}
 
 class AdvisorModel
-  extends Model<AdvisorProps, AdvisorCreationAttributes>
-  implements AdvisorProps
+  extends Model<AdvisorCreationAttributes>
+  implements AdvisorCreationAttributes
 {
   public id!: number;
-  public cpf!: string;
-  public name!: string;
-  public email!: string;
-  public password!: string;
 }
 
 AdvisorModel.init(
   {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    cpf: { type: DataTypes.STRING(14), allowNull: false, unique: true },
-    name: { type: DataTypes.STRING(100), allowNull: false },
-    email: { type: DataTypes.STRING(100), allowNull: false, unique: true },
-    password: { type: DataTypes.STRING(100), allowNull: false },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+    },
   },
   { sequelize, tableName: 'Advisors', timestamps: true },
 );
