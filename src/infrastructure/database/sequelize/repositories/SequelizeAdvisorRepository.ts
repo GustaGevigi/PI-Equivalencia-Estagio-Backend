@@ -89,7 +89,7 @@ export class SequelizeAdvisorRepository implements IAdvisorRepository {
       include: [
         {
           model: UserModel,
-          as: 'users',
+          as: 'user',
           where: { id },
         },
       ],
