@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../../../../config/database';
-import { Role, User, UserProps } from '../../../../domain/entities/User';
+import { Role, UserProps } from '../../../../domain/entities/User';
 
 interface UserCreationAttributes extends Optional<UserProps, 'id'> {}
 

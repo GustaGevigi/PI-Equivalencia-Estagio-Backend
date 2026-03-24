@@ -8,7 +8,7 @@ setupAssociations();
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: false });
+    await sequelize.sync();
 
     console.log('Conectado ao banco:', sequelize.getDatabaseName());
     console.log('Host do banco:', sequelize.config.host);
