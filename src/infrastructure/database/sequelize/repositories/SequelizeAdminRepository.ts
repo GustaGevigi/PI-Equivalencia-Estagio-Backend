@@ -1,5 +1,5 @@
 import sequelize from '../../../../config/database';
-import { Transaction, where } from 'sequelize';
+import { Transaction } from 'sequelize';
 
 import UserModel from '../models/UserModel';
 

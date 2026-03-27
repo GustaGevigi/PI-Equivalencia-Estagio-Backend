@@ -1,5 +1,5 @@
-import { AdvisorProps } from '../domain/entities/Advisor';
-import { IAdvisorRepository } from '../domain/repositories/IAdvisorRepository';
+import { AdvisorProps } from '../../domain/entities/Advisor';
+import { IAdvisorRepository } from '../../domain/repositories/IAdvisorRepository';
 
 export class GetAdvisorByEmailService {
   constructor(private advisorRepository: IAdvisorRepository) {}
