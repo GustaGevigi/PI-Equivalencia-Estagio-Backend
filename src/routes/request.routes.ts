@@ -1,12 +1,18 @@
 import { Router } from 'express';
 import { RequestFactory } from '../main/factories/RequestFactory';
-import { upload } from '../infrastructure/http/middleware/upload';
+import { upload } from '../infrastructure/http/middlewares/upload';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const requestRoutes = Router();
 const requestController = RequestFactory.create();
 
-requestRoutes.post('/', upload.array('files'), (req, res) =>
-  requestController.create(req, res),
+requestRoutes.post(
+  '/',
+  authMiddleware,
+  authorize(['student']),
+  upload.array('files'),
+  (req, res) => requestController.create(req, res),
 );
 
 requestRoutes.post('/protocol/generate', (req, res) =>
