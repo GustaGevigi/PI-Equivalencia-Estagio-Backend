@@ -3,7 +3,7 @@
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "app",
   "workspaceFolder": "/usr/src/app",
-  
+
   "customizations": {
     "vscode": {
       "settings": {
@@ -23,5 +23,5 @@
     }
   },
 
-  "remoteUser": "node" 
+  "remoteUser": "root"
 }

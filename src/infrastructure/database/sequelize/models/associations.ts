@@ -8,6 +8,7 @@ import AdvisorCourseModel from '../models/AdvisorCourseModel';
 import RequestModel from '../models/RequestModel';
 import DocumentModel from '../models/DocumentModel';
 import ProfessionalExperienceModel from '../models//ProfessionalExperienceModel';
+import UserTokenModel from './UserTokenModel';
 
 export const setupAssociations = () => {
   /**
@@ -127,3 +128,9 @@ export const setupAssociations = () => {
     as: 'course',
   });
 };
+
+/**
+ * 6. ASSOCIAÇÕES DA TABELA DE TOKENS
+ */
+
+UserTokenModel.belongsTo(UserModel);
