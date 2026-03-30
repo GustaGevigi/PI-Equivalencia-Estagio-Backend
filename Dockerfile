@@ -1,5 +1,5 @@
 # Usa uma versão específica do Node (evita conflito se um amigo tiver o Node 18 e outro o 22)
-FROM node:18.19.1
+FROM node:20
 
 # Define onde o código ficará dentro do container
 WORKDIR /usr/src/app
