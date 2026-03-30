@@ -12,6 +12,7 @@ import courseRouter from './routes/course.routes';
 import equivalencyRouter from './routes/equivalency.routes';
 import advisorCourseRouter from './routes/advisorController.routes';
 import requestRouter from './routes/request.routes';
+import authRouter from './routes/auth.routes';
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use('/courses', courseRouter);
 app.use('/equivalencies', equivalencyRouter);
 app.use('/advisor-courses', advisorCourseRouter);
 app.use('/requests', requestRouter);
+app.use('/auth', authRouter);
 
 export default app;

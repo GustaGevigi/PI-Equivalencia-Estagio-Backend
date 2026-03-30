@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { makeEquivalencyController } from '../main/factories/makeEquivalencyController';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
 
 const equivalencyRouter = Router();
 
@@ -11,7 +12,7 @@ equivalencyRouter.get('/search', (req, res) => {
   return makeEquivalencyController().findByName(req, res);
 });
 
-equivalencyRouter.get('/:id', (req, res) => {
+equivalencyRouter.get('/:id', authMiddleware, (req, res) => {
   return makeEquivalencyController().findById(req, res);
 });
 
