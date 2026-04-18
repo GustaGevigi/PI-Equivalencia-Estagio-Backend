@@ -12,6 +12,30 @@ const studentRouter = Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         password:
+ *           type: string
+ *         cpf:
+ *           type: string
+ *         role:
+ *           type: string
+ *           enum: [student, advisor, administrator]
+ */
+
+/**
+ * @swagger
  * /students/{id}:
  *   get:
  *     tags:
