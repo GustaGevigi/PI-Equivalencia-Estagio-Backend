@@ -21,7 +21,7 @@ CourseModel.init(
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: DataTypes.STRING(100), allowNull: false },
     semesterAmount: { type: DataTypes.INTEGER, allowNull: false },
-    shift: { type: DataTypes.STRING(20), allowNull: false, unique: true },
+    shift: { type: DataTypes.STRING(20), allowNull: false, unique: false },
     code: { type: DataTypes.STRING(20), allowNull: false, unique: true },
     createdByAdminId: {
       type: DataTypes.INTEGER,
