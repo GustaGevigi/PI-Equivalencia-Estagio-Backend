@@ -14,6 +14,11 @@ const equivalencyRouter = Router();
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     Equivalency:
  *       type: object
@@ -75,8 +80,6 @@ equivalencyRouter.get('/search', (req, res) => {
   return makeEquivalencyController().findByName(req, res);
 });
 
-/* ======= TODO: colocar token no /eqyuvalencies/{id} ======= */
-
 /**
  * @swagger
  * /equivalencies/{id}:
@@ -84,7 +87,9 @@ equivalencyRouter.get('/search', (req, res) => {
  *     tags:
  *       - Equivalency
  *     summary: Get equivalency by ID.
- *     description: Get equivalency by ID. (Precisa adicionar token)
+ *     description: Get equivalency by ID.
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
