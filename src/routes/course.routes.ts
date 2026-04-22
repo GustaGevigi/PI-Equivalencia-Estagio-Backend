@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { makeCourseController } from '../main/factories/makeCourseController';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const courseRouter = Router();
 
@@ -34,12 +36,19 @@ const courseRouter = Router();
  *           enum: [Matutino, Vespertino, Noturno, Integral]
  *         createdByAdminId:
  *           type: integer
+ * securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
  * /courses/:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Courses
  *     summary: List all courses.
@@ -50,7 +59,7 @@ const courseRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-courseRouter.get('/', (req, res) => {
+courseRouter.get('/', authMiddleware, (req, res) => {
   return makeCourseController().findAll(req, res);
 });
 
@@ -58,6 +67,8 @@ courseRouter.get('/', (req, res) => {
  * @swagger
  * /courses/search/code?code={code}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Courses
  *     summary: Get course by code.
@@ -77,7 +88,7 @@ courseRouter.get('/', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-courseRouter.get('/search/code', (req, res) => {
+courseRouter.get('/search/code', authMiddleware, (req, res) => {
   return makeCourseController().findByCode(req, res);
 });
 
@@ -85,6 +96,8 @@ courseRouter.get('/search/code', (req, res) => {
  * @swagger
  * /courses/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Courses
  *     summary: Get course by ID.
@@ -104,7 +117,7 @@ courseRouter.get('/search/code', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-courseRouter.get('/:id', (req, res) => {
+courseRouter.get('/:id', authMiddleware, authorize(['student']), (req, res) => {
   return makeCourseController().findById(req, res);
 });
 
@@ -112,6 +125,8 @@ courseRouter.get('/:id', (req, res) => {
  * @swagger
  * /courses/:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Courses
  *     summary: Create course.
@@ -131,8 +146,13 @@ courseRouter.get('/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-courseRouter.post('/', (req, res) => {
-  return makeCourseController().create(req, res);
-});
+courseRouter.post(
+  '/',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return makeCourseController().create(req, res);
+  },
+);
 
 export default courseRouter;
