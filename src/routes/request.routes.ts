@@ -96,8 +96,6 @@ requestRoutes.post(
  * @swagger
  * /requests/protocol/generate:
  *   post:
- *     security:
- *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Generate request protocol.
