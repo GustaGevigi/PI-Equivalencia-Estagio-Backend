@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { MakeAdminController } from '../main/factories/makeAdminController';
-import { Resolver } from 'dns';
 import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
 import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
