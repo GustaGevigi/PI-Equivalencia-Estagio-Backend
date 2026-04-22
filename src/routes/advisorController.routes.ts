@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { AdvisorCourseFactory } from '../main/factories/AdvisorCourseFactory';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const advisorCourseRouter = Router();
 
@@ -8,12 +10,19 @@ const advisorCourseRouter = Router();
  * tags:
  *   - name: Advisor Courses
  *     description: Advisor Courses API endpoint
+ * securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
  * /advisor-courses/:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Create link between Advisor and Course.
@@ -45,14 +54,21 @@ const advisorCourseRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.post('/', (req, res) => {
-  return AdvisorCourseFactory().create(req, res);
-});
+advisorCourseRouter.post(
+  '/',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().create(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisor-courses/delete/{id}:
  *   delete:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Delete link by ID.
@@ -72,14 +88,21 @@ advisorCourseRouter.post('/', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.delete('/delete/:id', (req, res) => {
-  return AdvisorCourseFactory().delete(req, res);
-});
+advisorCourseRouter.delete(
+  '/delete/:id',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().delete(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisor-courses/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Find link by ID.
@@ -99,14 +122,21 @@ advisorCourseRouter.delete('/delete/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.get('/:id', (req, res) => {
-  return AdvisorCourseFactory().findById(req, res);
-});
+advisorCourseRouter.get(
+  '/:id',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().findById(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisor-courses/advisor/{advisorId}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Find all links by advisor ID.
@@ -126,14 +156,21 @@ advisorCourseRouter.get('/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.get('/advisor/:advisorId', (req, res) => {
-  return AdvisorCourseFactory().findAllByAdvisor(req, res);
-});
+advisorCourseRouter.get(
+  '/advisor/:advisorId',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().findAllByAdvisor(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisor-courses/course/{courseId}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Find all links by course ID.
@@ -153,14 +190,21 @@ advisorCourseRouter.get('/advisor/:advisorId', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.get('/course/:courseId', (req, res) => {
-  return AdvisorCourseFactory().findAllByCourse(req, res);
-});
+advisorCourseRouter.get(
+  '/course/:courseId',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().findAllByCourse(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisor-courses/search/pair/:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisor Courses
  *     summary: Search using both Course and Advisor IDs.
@@ -182,8 +226,13 @@ advisorCourseRouter.get('/course/:courseId', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorCourseRouter.get('/search/pair', (req, res) => {
-  return AdvisorCourseFactory().findByPair(req, res);
-});
+advisorCourseRouter.get(
+  '/search/pair',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return AdvisorCourseFactory().findByPair(req, res);
+  },
+);
 
 export default advisorCourseRouter;

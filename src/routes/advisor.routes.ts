@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { MakeAdvisorController } from '../main/factories/makeAdvisorController';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const advisorRouter = Router();
 
@@ -31,12 +33,19 @@ const advisorRouter = Router();
  *           type: string
  *         cpf:
  *           type: string
+ * securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
  * /advisors/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisors
  *     summary: Get advisor by ID.
@@ -56,14 +65,21 @@ const advisorRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-advisorRouter.get('/:id', (req, res) => {
-  return MakeAdvisorController().getById(req, res);
-});
+advisorRouter.get(
+  '/:id',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => {
+    return MakeAdvisorController().getById(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisors/search/cpf?cpf={cpf}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisors
  *     summary: Get advisor by CPF.
@@ -83,14 +99,21 @@ advisorRouter.get('/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorRouter.get('/search/cpf', (req, res) => {
-  return MakeAdvisorController().getByCpf(req, res);
-});
+advisorRouter.get(
+  '/search/cpf',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => {
+    return MakeAdvisorController().getByCpf(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisors/search/email?email={email}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisors
  *     summary: Get advisor by E-mail.
@@ -110,14 +133,21 @@ advisorRouter.get('/search/cpf', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorRouter.get('/search/email', (req, res) => {
-  return MakeAdvisorController().getByEmail(req, res);
-});
+advisorRouter.get(
+  '/search/email',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => {
+    return MakeAdvisorController().getByEmail(req, res);
+  },
+);
 
 /**
  * @swagger
  * /advisors/:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Advisors
  *     summary: Create advisor.
@@ -137,8 +167,13 @@ advisorRouter.get('/search/email', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-advisorRouter.post('/', (req, res) => {
-  return MakeAdvisorController().create(req, res);
-});
+advisorRouter.post(
+  '/',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return MakeAdvisorController().create(req, res);
+  },
+);
 
 export default advisorRouter;

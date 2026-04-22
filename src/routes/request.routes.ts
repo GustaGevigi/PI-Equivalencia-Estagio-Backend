@@ -46,6 +46,8 @@ const requestController = RequestFactory.create();
  * @swagger
  * /requests/:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Create request.
@@ -94,6 +96,8 @@ requestRoutes.post(
  * @swagger
  * /requests/protocol/generate:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Generate request protocol.
@@ -114,6 +118,8 @@ requestRoutes.post('/protocol/generate', (req, res) =>
  * @swagger
  * /requests/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Get request by ID.
@@ -133,12 +139,16 @@ requestRoutes.post('/protocol/generate', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.get('/:id', (req, res) => requestController.findById(req, res));
+requestRoutes.get('/:id', authMiddleware, (req, res) =>
+  requestController.findById(req, res),
+);
 
 /**
  * @swagger
  * /requests/student/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Get request by student ID.
@@ -158,7 +168,7 @@ requestRoutes.get('/:id', (req, res) => requestController.findById(req, res));
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.get('/student/:studentId', (req, res) =>
+requestRoutes.get('/student/:studentId', authMiddleware, (req, res) =>
   requestController.findByStudent(req, res),
 );
 
@@ -166,6 +176,8 @@ requestRoutes.get('/student/:studentId', (req, res) =>
  * @swagger
  * /requests/search/protocol/:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Get request by protocol.
@@ -185,7 +197,7 @@ requestRoutes.get('/student/:studentId', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.get('/search/protocol', (req, res) =>
+requestRoutes.get('/search/protocol', authMiddleware, (req, res) =>
   requestController.findByProtocol(req, res),
 );
 
@@ -193,6 +205,8 @@ requestRoutes.get('/search/protocol', (req, res) =>
  * @swagger
  * /requests/search/protocol/:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Check request duplicity.
@@ -218,7 +232,7 @@ requestRoutes.get('/search/protocol', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.get('/check/duplicity', (req, res) =>
+requestRoutes.get('/check/duplicity', authMiddleware, (req, res) =>
   requestController.checkDuplicity(req, res),
 );
 
@@ -226,6 +240,8 @@ requestRoutes.get('/check/duplicity', (req, res) =>
  * @swagger
  * /requests/advisor/{id}/course/{courseId}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Get request by Advisor Course link.
@@ -251,14 +267,19 @@ requestRoutes.get('/check/duplicity', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.get('/advisor/:id/course/:courseId', (req, res) =>
-  requestController.findByAdvisorCourse(req, res),
+requestRoutes.get(
+  '/advisor/:id/course/:courseId',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => requestController.findByAdvisorCourse(req, res),
 );
 
 /**
  * @swagger
  * /requests/{id}/status/:
  *   patch:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Update request status.
@@ -291,14 +312,19 @@ requestRoutes.get('/advisor/:id/course/:courseId', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.patch('/:id/status', (req, res) =>
-  requestController.updatedStatus(req, res),
+requestRoutes.patch(
+  '/:id/status',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => requestController.updatedStatus(req, res),
 );
 
 /**
  * @swagger
  * /requests/{id}/observation/:
  *   patch:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Update request observation.
@@ -330,14 +356,19 @@ requestRoutes.patch('/:id/status', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.patch('/:id/observation', (req, res) =>
-  requestController.addObservation(req, res),
+requestRoutes.patch(
+  '/:id/observation',
+  authMiddleware,
+  authorize(['advisor']),
+  (req, res) => requestController.addObservation(req, res),
 );
 
 /**
  * @swagger
  * /requests/{id}:
  *   delete:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Request
  *     summary: Delete request by ID.
@@ -357,6 +388,11 @@ requestRoutes.patch('/:id/observation', (req, res) =>
  *       '500':
  *         description: Internal server error
  */
-requestRoutes.delete('/:id', (req, res) => requestController.cancel(req, res));
+requestRoutes.delete(
+  '/:id',
+  authMiddleware,
+  authorize(['student']),
+  (req, res) => requestController.cancel(req, res),
+);
 
 export default requestRoutes;
