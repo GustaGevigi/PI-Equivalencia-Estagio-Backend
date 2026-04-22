@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { makeEquivalencyController } from '../main/factories/makeEquivalencyController';
 import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const equivalencyRouter = Router();
 
@@ -37,6 +38,8 @@ const equivalencyRouter = Router();
  * @swagger
  * /equivalencies/:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Equivalency
  *     summary: List all equivalencies.
@@ -49,7 +52,7 @@ const equivalencyRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-equivalencyRouter.get('/', (req, res) => {
+equivalencyRouter.get('/', authMiddleware, (req, res) => {
   return makeEquivalencyController().findAll(req, res);
 });
 
@@ -76,7 +79,7 @@ equivalencyRouter.get('/', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-equivalencyRouter.get('/search', (req, res) => {
+equivalencyRouter.get('/search', authMiddleware, (req, res) => {
   return makeEquivalencyController().findByName(req, res);
 });
 
@@ -132,9 +135,14 @@ equivalencyRouter.get('/:id', authMiddleware, (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-equivalencyRouter.post('/create', (req, res) => {
-  return makeEquivalencyController().create(req, res);
-});
+equivalencyRouter.post(
+  '/create',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return makeEquivalencyController().create(req, res);
+  },
+);
 
 /**
  * @swagger
@@ -164,8 +172,13 @@ equivalencyRouter.post('/create', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-equivalencyRouter.patch('/updated/:id', (req, res) => {
-  return makeEquivalencyController().update(req, res);
-});
+equivalencyRouter.patch(
+  '/updated/:id',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return makeEquivalencyController().update(req, res);
+  },
+);
 
 export default equivalencyRouter;
