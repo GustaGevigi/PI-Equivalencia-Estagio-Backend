@@ -60,6 +60,8 @@ equivalencyRouter.get('/', authMiddleware, (req, res) => {
  * @swagger
  * /equivalencies/search?name={name}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Equivalency
  *     summary: Get equivalency by name.
@@ -87,6 +89,8 @@ equivalencyRouter.get('/search', authMiddleware, (req, res) => {
  * @swagger
  * /equivalencies/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Equivalency
  *     summary: Get equivalency by ID.
@@ -116,6 +120,8 @@ equivalencyRouter.get('/:id', authMiddleware, (req, res) => {
  * @swagger
  * /equivalencies/create:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Equivalency
  *     summary: Create equivalency.
@@ -148,6 +154,8 @@ equivalencyRouter.post(
  * @swagger
  * /equivalencies/updated/{id}:
  *   patch:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Equivalency
  *     summary: Update equivalency.

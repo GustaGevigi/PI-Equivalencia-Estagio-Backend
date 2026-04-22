@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { makeStudentController } from '../main/factories/makeStudentController';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
 
 const studentRouter = Router();
 
@@ -13,6 +14,11 @@ const studentRouter = Router();
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     Student:
  *       type: object
@@ -49,6 +55,8 @@ const studentRouter = Router();
  * @swagger
  * /students/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Students
  *     summary: Get student by ID.
@@ -68,7 +76,7 @@ const studentRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-studentRouter.get('/:id', (req, res) => {
+studentRouter.get('/:id', authMiddleware, (req, res) => {
   return makeStudentController().getById(req, res);
 });
 
@@ -76,6 +84,8 @@ studentRouter.get('/:id', (req, res) => {
  * @swagger
  * /students/search/cpf?cpf={cpf}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Students
  *     summary: Get student by CPF.
@@ -95,7 +105,7 @@ studentRouter.get('/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-studentRouter.get('/search/cpf', (req, res) => {
+studentRouter.get('/search/cpf', authMiddleware, (req, res) => {
   return makeStudentController().getByCpf(req, res);
 });
 
@@ -103,6 +113,8 @@ studentRouter.get('/search/cpf', (req, res) => {
  * @swagger
  * /students/search/email?email={email}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Students
  *     summary: Get student by E-mail.
@@ -121,7 +133,7 @@ studentRouter.get('/search/cpf', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-studentRouter.get('/search/email', (req, res) => {
+studentRouter.get('/search/email', authMiddleware, (req, res) => {
   return makeStudentController().getByEmail(req, res);
 });
 
