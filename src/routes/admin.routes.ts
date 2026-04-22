@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import { MakeAdminController } from '../main/factories/makeAdminController';
+import { Resolver } from 'dns';
+import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
+import { authorize } from '../infrastructure/http/middlewares/RoleMiddleware';
 
 const adminRouter = Router();
 
@@ -31,12 +34,19 @@ const adminRouter = Router();
  *           type: string
  *         cpf:
  *           type: string
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
  * /administrators/{id}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Administrators
  *     summary: Get admin by ID.
@@ -56,14 +66,21 @@ const adminRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-adminRouter.get('/:id', (req, res) => {
-  return MakeAdminController().getById(req, res);
-});
+adminRouter.get(
+  '/:id',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return MakeAdminController().getById(req, res);
+  },
+);
 
 /**
  * @swagger
  * /administrators/search/cpf?cpf={cpf}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Administrators
  *     summary: Get admin by CPF.
@@ -83,14 +100,21 @@ adminRouter.get('/:id', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-adminRouter.get('/search/cpf', (req, res) => {
-  return MakeAdminController().getByCpf(req, res);
-});
+adminRouter.get(
+  '/search/cpf',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return MakeAdminController().getByCpf(req, res);
+  },
+);
 
 /**
  * @swagger
  * /administrators/search/email?email={email}:
  *   get:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Administrators
  *     summary: Get admin by E-mail.
@@ -110,14 +134,21 @@ adminRouter.get('/search/cpf', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-adminRouter.get('/search/email', (req, res) => {
-  return MakeAdminController().getByEmail(req, res);
-});
+adminRouter.get(
+  '/search/email',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return MakeAdminController().getByEmail(req, res);
+  },
+);
 
 /**
  * @swagger
  * /administrators/:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Administrators
  *     summary: Create administrator.
@@ -137,8 +168,13 @@ adminRouter.get('/search/email', (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-adminRouter.post('/', (req, res) => {
-  return MakeAdminController().create(req, res);
-});
+adminRouter.post(
+  '/',
+  authMiddleware,
+  authorize(['administrator']),
+  (req, res) => {
+    return MakeAdminController().create(req, res);
+  },
+);
 
 export default adminRouter;
