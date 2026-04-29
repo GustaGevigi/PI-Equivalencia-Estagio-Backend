@@ -23,6 +23,8 @@ Este projeto utiliza uma stack moderna e escalável:
 
     Envio de E-mail: Nodemailer & Etheral
 
+    Swagger: Documentação e Teste de Rotas e API's respectivas
+
 🏗️ Arquitetura
 
 O projeto foi construído seguindo os princípios da Clean Architecture, garantindo que as regras de negócio sejam independentes de ferramentas externas, frameworks ou bancos de dados.
@@ -42,3 +44,22 @@ Uma característica técnica marcante deste projeto é o uso de dois bancos de d
     MySQL: Gerencia a consistência relacional necessária para o fluxo de aprovação das solicitações.
 
     MongoDB: Armazena logs de auditoria movimentação (ActionLogs) reaizada em uma solicitação, permitindo o acompnhamento do mesmo por meio de um histórico, sem que impacte no Banco de Dados Relacional.
+
+🏁 Como Executar
+
+O projeto está totalmente "dockerizado", o que facilita a execução do ambiente de desenvolvimento.
+
+    Clone o repositório:
+    Bash
+
+    git clone https://github.com/GustaGevigi/Internship-Equivalency.git
+
+    Configure as variáveis de ambiente:
+    Crie um arquivo .env na raiz (baseado no .env.example).
+
+    Suba os containers:
+    Bash
+
+    docker compose up -d
+
+A API estará disponível em http://localhost:3000/api-docs.
