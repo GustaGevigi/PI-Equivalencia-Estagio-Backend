@@ -1,14 +1,24 @@
 import { Request, RequestProps } from '../../domain/entities/Request';
 import { IRequestRepository } from '../../domain/repositories/IRequestRepository';
 
+import { ActionLog } from '../../domain/entities/ActionLog';
+import { IActionLogRepository } from '../../domain/repositories/IActionLogRepository';
+
 export type RequestDTO = Omit<
   RequestProps,
   'id' | 'status' | 'observation' | 'protocol' | 'Documents'
 >;
 export class CreateRequestService {
-  constructor(private requestRepo: IRequestRepository) {}
+  constructor(
+    private requestRepo: IRequestRepository,
+    private logRepo: IActionLogRepository,
+  ) {}
 
-  async execute(requestData: RequestDTO, files: any[]): Promise<Request> {
+  async execute(
+    requestData: RequestDTO,
+    logInfo: { author: string; authorRole: string },
+    files: any[],
+  ): Promise<Request> {
     const isDuplicate = await this.requestRepo.checkDuplicity(
       requestData.studentId,
       requestData.equivalencyId,
@@ -30,6 +40,22 @@ export class CreateRequestService {
       })),
     });
 
-    return await this.requestRepo.create(newRequest);
+    const savedRequest = await this.requestRepo.create(newRequest);
+
+    if (!savedRequest.props.id) {
+      throw new Error('Falha ao obter ID da solicitação para registro de log.');
+    }
+
+    const newLog = new ActionLog({
+      requestId: savedRequest.props.id,
+      action: 'Solicitação Criada',
+      author: logInfo.author,
+      authorRole: logInfo.authorRole,
+      createdAt: new Date(),
+    });
+
+    await this.logRepo.save(newLog);
+
+    return savedRequest;
   }
 }

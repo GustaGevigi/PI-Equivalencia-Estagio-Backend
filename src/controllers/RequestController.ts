@@ -40,10 +40,15 @@ export class RequestController {
 
       const { studentId, equivalencyId, advisorId, experiences } = req.body;
 
+      const logInfo = {
+        author: req.user!.name,
+        authorRole: req.user!.role,
+      };
+
       const requestDTO: RequestDTO = {
         studentId: Number(studentId),
         equivalencyId: Number(equivalencyId),
-        advisorId: req.body.advisorId ? Number(advisorId) : undefined, // Adicione se for opcional
+        advisorId: req.body.advisorId ? Number(advisorId) : undefined,
 
         Professional_Experience:
           typeof req.body.experiences === 'string'
@@ -51,7 +56,11 @@ export class RequestController {
             : experiences,
       };
 
-      const result = await this.createRequestService.execute(requestDTO, files);
+      const result = await this.createRequestService.execute(
+        requestDTO,
+        logInfo,
+        files,
+      );
 
       return res.status(201).json({
         status: 'Sucess',
