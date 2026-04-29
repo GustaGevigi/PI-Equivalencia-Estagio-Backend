@@ -31,6 +31,7 @@ export class LoginService {
 
     const token = this.authProvider.generateToken({
       id: user.props.id,
+      name: user.props.name,
       email: user.props.email,
       role: user.props.role,
     });
@@ -38,6 +39,7 @@ export class LoginService {
     return {
       user: {
         id: user.props.id,
+        name: user.props.name,
         email: user.props.email,
         role: user.props.role,
       },
