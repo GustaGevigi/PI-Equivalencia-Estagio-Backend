@@ -6,7 +6,7 @@ API desenvolvida para a gestão e automação do processo de equivalência de es
 
 O design da interface foi planejado para priorizar a usabilidade e a clareza no fluxo de solicitações. Você pode explorar o protótipo completo através do link abaixo:
 
-🔗 Acessar Projeto no Figma
+    [🔗 Acessar Projeto no Figma](https://www.figma.com/design/jojPPmbp5e1uAdYcMuK8ms/Fatec?node-id=0-1&t=6ECgk4cMjcZrMZsx-1)
 
 🚀 Tecnologias
 
