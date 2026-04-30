@@ -1,10 +1,12 @@
 Projeto Integrador: Equivalência de Estágio Backend
 
-API robusta desenvolvida para a gestão e automação do processo de equivalência de estágio para a Instituição de Ensino Superior FATEC. O sistema permite o gerenciamento completo desde a submissão de documentos pelo aluno até a aprovação final por orientadores, junto da gestão realizada por administradores.
+API desenvolvida para a gestão e automação do processo de equivalência de estágio para a Instituição de Ensino Superior FATEC. O sistema permite o gerenciamento completo desde a submissão de documentos pelo aluno até a aprovação final por orientadores, junto da gestão realizada por administradores.
 
-🌠Figma:
+🎨 Interface Visual (UI/UX)
 
-    Link: https://www.figma.com/design/jojPPmbp5e1uAdYcMuK8ms/Fatec?node-id=0-1&t=6ECgk4cMjcZrMZsx-1
+O design da interface foi planejado para priorizar a usabilidade e a clareza no fluxo de solicitações. Você pode explorar o protótipo completo através do link abaixo:
+
+🔗 Acessar Projeto no Figma
 
 🚀 Tecnologias
 
@@ -67,3 +69,13 @@ O projeto está totalmente "dockerizado", o que facilita a execução do ambient
     docker compose up -d
 
 A API estará disponível em http://localhost:3000/api-docs.
+
+🔐 Segurança e Roles
+
+O acesso é controlado por permissões granulares:
+
+    Student: Cria e visualiza suas próprias solicitações.
+
+    Advisor: Analisa e adiciona observações às solicitações dos seus cursos vinculados.
+
+    Admin: Gestão total de usuários, cursos e configurações do sistema.
