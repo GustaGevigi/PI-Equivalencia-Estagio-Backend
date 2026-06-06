@@ -2,6 +2,9 @@ import { Router } from 'express';
 import { StudentFactory } from '../main/factories/StudentFactory';
 import { authMiddleware } from '../infrastructure/http/middlewares/AuthMiddleware';
 
+import { studentSchema } from '../infrastructure/schemas/student.schemas';
+import { validateBody } from '../middlewares/ValidateBody';
+
 const studentRouter = Router();
 
 /**
@@ -164,7 +167,7 @@ studentRouter.post('/', (req, res) => {
   return StudentFactory().create(req, res);
 });
 
-studentRouter.patch('/:id', (req, res) => {
+studentRouter.patch('/:id', validateBody(studentSchema), (req, res) => {
   return StudentFactory().create(req, res);
 });
 
