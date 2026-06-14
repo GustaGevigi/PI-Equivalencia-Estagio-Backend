@@ -57,7 +57,14 @@ export class SequelizeAdminRepository implements IAdminRepository {
 
   async findByCpf(cpf: string): Promise<Admin | null> {
     const admin = await AdminModel.findOne({
-      include: [{ model: UserModel, as: 'user', where: { cpf } }],
+      include: [
+        {
+          model: UserModel,
+          as: 'user',
+          where: { cpf },
+          attributes: { exclude: ['password'] },
+        },
+      ],
     });
     return admin ? this.mapToEntity(admin) : null;
   }
@@ -69,6 +76,7 @@ export class SequelizeAdminRepository implements IAdminRepository {
           model: UserModel,
           as: 'user',
           where: { email },
+          attributes: { exclude: ['password'] },
         },
       ],
     });
@@ -82,6 +90,7 @@ export class SequelizeAdminRepository implements IAdminRepository {
           model: UserModel,
           as: 'user',
           where: { id },
+          attributes: { exclude: ['password'] },
         },
       ],
     });

@@ -70,7 +70,7 @@ const advisorRouter = Router();
 advisorRouter.get(
   '/:id',
   authMiddleware,
-  authorize(['advisor']),
+  authorize(['administrator', 'advisor']),
   (req, res) => {
     return AdvisorFactory().getById(req, res);
   },
@@ -104,7 +104,7 @@ advisorRouter.get(
 advisorRouter.get(
   '/search/cpf',
   authMiddleware,
-  authorize(['advisor']),
+  authorize(['administrator', 'advisor']),
   (req, res) => {
     return AdvisorFactory().getByCpf(req, res);
   },
@@ -138,7 +138,7 @@ advisorRouter.get(
 advisorRouter.get(
   '/search/email',
   authMiddleware,
-  authorize(['advisor']),
+  authorize(['administrator', 'advisor']),
   (req, res) => {
     return AdvisorFactory().getByEmail(req, res);
   },
@@ -180,4 +180,3 @@ advisorRouter.post(
 );
 
 export default advisorRouter;
-
