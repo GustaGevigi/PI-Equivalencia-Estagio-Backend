@@ -10,12 +10,17 @@ export class SequelizeUserRepository implements IUserRepository {
   }
 
   async findByCpf(cpf: string): Promise<User | null> {
-    const user = await UserModel.findOne({ where: { cpf } });
+    const user = await UserModel.findOne({
+      where: { cpf },
+      attributes: { exclude: ['password'] },
+    });
     return user ? new User(user.toJSON()) : null;
   }
 
   async findById(id: number): Promise<User | null> {
-    const user = await UserModel.findByPk(id);
+    const user = await UserModel.findByPk(id, {
+      attributes: { exclude: ['password'] },
+    });
     return user ? new User(user.toJSON()) : null;
   }
 }

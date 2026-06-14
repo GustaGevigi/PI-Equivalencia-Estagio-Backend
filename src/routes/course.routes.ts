@@ -117,9 +117,14 @@ courseRouter.get('/search/code', authMiddleware, (req, res) => {
  *       '500':
  *         description: Internal server error
  */
-courseRouter.get('/:id', authMiddleware, authorize(['student']), (req, res) => {
-  return CourseFactory().findById(req, res);
-});
+courseRouter.get(
+  '/:id',
+  authMiddleware,
+  authorize(['administrator', 'student']),
+  (req, res) => {
+    return CourseFactory().findById(req, res);
+  },
+);
 
 /**
  * @swagger

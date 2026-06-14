@@ -65,6 +65,7 @@ export class SequelizeAdvisorRepository implements IAdvisorRepository {
           model: UserModel,
           as: 'user',
           where: { cpf },
+          attributes: { exclude: ['password'] },
         },
       ],
     });
@@ -78,6 +79,7 @@ export class SequelizeAdvisorRepository implements IAdvisorRepository {
           model: UserModel,
           as: 'user',
           where: { email },
+          attributes: { exclude: ['password'] },
         },
       ],
     });
@@ -91,6 +93,7 @@ export class SequelizeAdvisorRepository implements IAdvisorRepository {
           model: UserModel,
           as: 'user',
           where: { id },
+          attributes: { exclude: ['password'] },
         },
       ],
     });

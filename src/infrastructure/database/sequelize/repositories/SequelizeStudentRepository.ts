@@ -70,6 +70,7 @@ export class SequelizeStudentRepository implements IStudentRepository {
           model: UserModel,
           as: 'user',
           where: { cpf },
+          attributes: { exclude: ['password'] },
         },
       ],
     });
@@ -83,6 +84,7 @@ export class SequelizeStudentRepository implements IStudentRepository {
           model: UserModel,
           as: 'user',
           where: { email },
+          attributes: { exclude: ['password'] },
         },
       ],
     });
@@ -93,7 +95,7 @@ export class SequelizeStudentRepository implements IStudentRepository {
     const student = await StudentModel.findOne({
       where: { id },
       include: [
-        { model: UserModel, as: 'user' },
+        { model: UserModel, as: 'user', attributes: { exclude: ['password'] } },
         { model: CourseModel, as: 'course' },
       ],
     });
