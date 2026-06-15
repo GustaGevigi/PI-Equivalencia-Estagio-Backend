@@ -10,6 +10,7 @@ module.exports = {
       'Users',
       [
         {
+          id: 1,
           name: 'Admin',
           email: 'admin@cps.sp.gov.br',
           password: password,
@@ -21,6 +22,19 @@ module.exports = {
       ],
       {},
     );
+
+    await queryInterface.bulkInsert(
+      'Administrators',
+      [
+        {
+          id: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {},
+    );
+
   },
 
   async down(queryInterface, Sequelize) {
