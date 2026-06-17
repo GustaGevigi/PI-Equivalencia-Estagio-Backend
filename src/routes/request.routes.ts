@@ -150,25 +150,54 @@ requestRoutes.get('/:id', authMiddleware, (req, res) =>
  *       - bearerAuth: []
  *     tags:
  *       - Request
- *     summary: Get request by student ID.
- *     description: Get request by student ID.
+ *     summary: get request by student id.
+ *     description: get request by student id.
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: number
  *         required: true
- *         description: Request ID
+ *         description: request id
  *     responses:
  *       '200':
- *         description: A successful response
+ *         description: a successful response
  *       '404':
- *         description: Request not found
+ *         description: request not found
  *       '500':
- *         description: Internal server error
+ *         description: internal server error
  */
-requestRoutes.get('/student/:studentId', authMiddleware, (req, res) =>
+requestRoutes.get('/student/:studentid', authMiddleware, (req, res) =>
   requestController.findByStudent(req, res),
+);
+
+/**
+ * @swagger
+ * /requests/course/{id}:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Request
+ *     summary: get request by course id.
+ *     description: get requests by course id.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: course id
+ *     responses:
+ *       '200':
+ *         description: a successful response
+ *       '404':
+ *         description: request not found
+ *       '500':
+ *         description: internal server error
+ */
+requestRoutes.get('/course/:courseId', (req, res) =>
+  requestController.findByCourseId(req, res),
 );
 
 /**

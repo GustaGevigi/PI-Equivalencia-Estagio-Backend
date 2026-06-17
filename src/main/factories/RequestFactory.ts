@@ -10,6 +10,7 @@ import { CancelRequestService } from '../../services/request/CancelRequestServic
 import { CheckDuplicityService } from '../../services/request/CheckDuplicityService';
 import { CreateRequestService } from '../../services/request/CreateRequestService';
 import { FindAdvisorCourseService } from '../../services/request/FindByAdvisorCourseService';
+import { FindByCourseIdService } from '../../services/request/FindByCourseIdService';
 import { FindByIdService } from '../../services/request/FindByIdService';
 import { FindByProtocolService } from '../../services/request/FindByProtocolService';
 import { FindByStudentService } from '../../services/request/FindByStudentService';
@@ -48,6 +49,7 @@ export class RequestFactory {
       logRepository,
     );
     const findByProtocolService = new FindByProtocolService(requestRepository);
+    const findByCourseIdService = new FindByCourseIdService(requestRepository);
     const findByStudentService = new FindByStudentService(requestRepository);
     const generateProtocolService = new GenerateProtocolService(
       requestRepository,
@@ -72,6 +74,7 @@ export class RequestFactory {
       checkDuplicityService,
       createRequestService,
       findAdvisorCourseService,
+      findByCourseIdService,
       findByIdService,
       findByProtocolService,
       findByStudentService,
