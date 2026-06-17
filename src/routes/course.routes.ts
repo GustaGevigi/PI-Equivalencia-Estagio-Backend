@@ -59,7 +59,7 @@ const courseRouter = Router();
  *       '500':
  *         description: Internal server error
  */
-courseRouter.get('/', authMiddleware, (req, res) => {
+courseRouter.get('/', (req, res) => {
   return CourseFactory().findAll(req, res);
 });
 
