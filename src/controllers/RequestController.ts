@@ -8,6 +8,7 @@ import {
 } from '../services/request/CreateRequestService';
 import { FindAdvisorCourseService } from '../services/request/FindByAdvisorCourseService';
 import { FindByIdService } from '../services/request/FindByIdService';
+import { FindByCourseIdService } from '../services/request/FindByCourseIdService';
 import { FindByProtocolService } from '../services/request/FindByProtocolService';
 import { FindByStudentService } from '../services/request/FindByStudentService';
 import { GenerateProtocolService } from '../services/request/GenerateProtocolService';
@@ -21,13 +22,14 @@ export class RequestController {
     private checkDuplicityService: CheckDuplicityService,
     private createRequestService: CreateRequestService,
     private findAdvisorCourseService: FindAdvisorCourseService,
+    private findByCourseIdService: FindByCourseIdService,
     private findByIdService: FindByIdService,
     private findByProtocolService: FindByProtocolService,
     private findByStudentService: FindByStudentService,
     private generateProtocolService: GenerateProtocolService,
     private updateStatusService: UpdateStatusService,
     private assignAdvisorService: AssignAdvisorService,
-  ) {}
+  ) { }
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
@@ -136,6 +138,29 @@ export class RequestController {
     } catch (error: any) {
       return res.status(400).json({
         message: error.message,
+      });
+    }
+  }
+
+  async findByCourseId(req: Request, res: Response): Promise<Response> {
+    try {
+      const { courseId } = req.params;
+
+      if (!courseId) {
+        return res.status(400).json({
+          message: 'O ID do curso é obrigatório.',
+        });
+      }
+
+      const foundRequests = await this.findByCourseIdService.execute(Number(courseId));
+
+      return res.status(200).json({
+        status: 'Success!',
+        data: foundRequests,
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        message: error.message || 'Erro ao buscar solicitações do curso.',
       });
     }
   }

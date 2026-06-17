@@ -49,6 +49,23 @@ export class SequelizeRequestRepository implements IRequestRepository {
     return new Request(foundRequest.get({ plain: true }) as any);
   }
 
+  async findByCourseId(courseId: number): Promise<Request[]> {
+    const requests = await RequestModel.findAll({
+      include: [
+        {
+          model: StudentModel, as: 'student',
+          where: {
+            courseId: courseId
+          }
+        },
+        { model: DocumentModel, as: 'Documents' },
+        { model: ProfessionalExperienceModel, as: 'Professional_Experience' },
+      ],
+    });
+
+    return requests.map((req) => new Request(req.toJSON() as any));
+  }
+
   async findByStudent(studentId: number): Promise<Request[]> {
     const requests = await RequestModel.findAll({
       where: { studentId },
