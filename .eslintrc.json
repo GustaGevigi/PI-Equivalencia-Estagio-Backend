@@ -15,5 +15,12 @@
     "class-methods-use-this": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
+  },
+  "overrides": {
+    "files": ["migrations/*.ts", "seeders/*.ts", "models/*.ts", ".sequelizerc"],
+    "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+    }
   }
 }
